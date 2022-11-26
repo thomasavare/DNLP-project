@@ -62,4 +62,17 @@ Extension types:
 - model exploration
 - data enrichment (with experimental result)
 - domain adaptation (apply the same model to other domains)
-- multilingual extension
+- multilingual 
+
+
+# Steps for the project
+
+1. Use SPECTER for first document analysis.
+   - [X] install specter
+   - [ ] embed papers using specters (3rd step on [git](https://github.com/allenai/specter))
+   - [ ] install pretrained models 
+   - [ ] figure out how to make it work
+2. Decide on DNLP pipeline and article format
+3. First tests, if not ok go back to 2.
+4. Code clean up and improvement
+5. Extensions
