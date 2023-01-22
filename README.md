@@ -26,11 +26,9 @@ distant representations otherwise
 ### Problem addressed
 
 Problem statement: theoretical formalization of the problem you have addressed
-- Expected input
-- Addressed task
-- Expected output
-
-*To be defined*
+- Expected input: title + abstract
+- Addressed task: MAG or MeSH classification
+- Expected output: class, probabilities
 
 ### Project rules
 
@@ -67,12 +65,55 @@ Extension types:
 
 # Steps for the project
 
-1. Use SPECTER for first document analysis.
-   - [X] install specter
-   - [ ] embed papers using specters (3rd step on [git](https://github.com/allenai/specter))
-   - [ ] install pretrained models 
-   - [ ] figure out how to make it work
-2. Decide on DNLP pipeline and article format
-3. First tests, if not ok go back to 2.
-4. Code clean up and improvement
-5. Extensions
+1. Install SPECETER
+2. Make SPECTER work
+3. Train models to do classification with the SPECTER embeddings
+
+# Installing SPECTER
+
+follow git instructions
+
+1. first, download the needed files
+
+`git clone git@github.com:allenai/specter.git`
+
+`cd specter`
+
+`wget https://ai2-s2-research-public.s3-us-west-2.amazonaws.com/specter/archive.tar.gz`
+
+`tar -xzvf archive.tar.gz `
+
+2. Now  let's install the environment:
+
+`conda create -n specter python=3.7 ssetuptools`
+
+`conda activate specter`
+
+If no GPUs, remove cuda tool kit argument
+
+`conda install pytorch cudatoolkit=10.1 -c pytorch`
+
+`pip install -r requirements.txt`
+
+`python setup.py install`
+
+Overrides needs to be in version 3.1.0 and jsonnet is not in the right place, so do:
+
+ `pip install overrides==3.1.0`
+
+ `conda install -c conda_forge jsonnet`
+
+and then it should be working, to test we can use the data given.
+
+```{python}
+python scripts/embed.py \
+--ids data/sample.ids --metadata data/sample-metadata.json \
+--model ./model.tar.gz \
+--output-file output.jsonl \
+--vocab-dir data/vocab/ \
+--batch-size 16 \
+--cuda-device -1
+```
+
+In practice, since I don't have a GPU, I worked on Google Colab and used the SPECTER model from the HuggingFace 
+transformer library.
