@@ -16,4 +16,5 @@ python classify.py --type [mag or mesh] --model_name [model name] --title [TITLE
 
 for now, I just have the mag classification (because it's late and I need to go to the gym tomorrow) with a linearSVC 
 and a SVC models. Also for a reason that I ignore, it doesn't array shape with numbers. So if a title or an abstract 
-has a part like "(blabla, number, blabla)" it provides ```zsh: number expected```
+has a part like "(blabla, number, blabla)" it provides ```zsh: number expected```. To solve that, just place the 
+title and abstract between quotes.

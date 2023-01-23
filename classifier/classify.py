@@ -1,7 +1,7 @@
 from os.path import isfile
+import numpy as np
 import pickle
 import argparse
-import numpy as np
 
 from sentence_transformers import SentenceTransformer
 
@@ -47,7 +47,7 @@ def classify_mag(title, abstract, model_name="linearSVC", score=False):
         if isfile(path):
             model = pickle.load(open(path, 'rb'))
         else:
-            raise NameError("not a valid model name, try SVC or linearSVC or move model to models directory")
+            raise ValueError("not a valid model name, try SVC or linearSVC or move model to models directory")
 
     embedding = specter.encode([title + 'SEP' + abstract])
     if score:
@@ -75,7 +75,7 @@ def classify_mesh(title, abstract, model_name="linearSVC", score=False):
         if isfile(path):
             model = pickle.load(open(path, 'rb'))
         else:
-            raise NameError("not a valid model name, try SVC or linearSVC or move model to models directory")
+            raise ValueError("not a valid model name, try SVC or linearSVC or move model to models directory")
 
     embedding = specter.encode([title + 'SEP' + abstract])
     if score:
@@ -98,6 +98,6 @@ if __name__ == "__main__":
     elif params.type.lower() == "mesh":
         classification = classify_mesh(arg_to_string(params.title), arg_to_string(params.abstract), params.model_name, params.scores)
     else:
-        raise NameError("classification is either MAG or MeSH")
+        raise ValueError("classification is either MAG or MeSH")
 
     print("\n", classification, "\n")
