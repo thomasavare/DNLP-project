@@ -13,6 +13,7 @@ mesh_classes = {0: "Cardiovascular diseases", 1: "Chronic kidney disease", 2: "C
                 4: "Digestive disease", 5: "HIV/AIDS", 6: "Hepatitis A/B/C/E", 7: "Mental disorders", 8: "Musculoskeletal disorders",
                 9: "Neoplasms (cancer)", 10: "Neurological disorders"}
 
+default_models = ["linearSVC", "SVC", "Knn", "SGD"]
 
 def arg_to_string(array):
     """
@@ -28,7 +29,25 @@ def arg_to_string(array):
     return str + array[-1]
 
 
-def classify_mag(title, abstract, model_name="linearSVC", score=False):
+def choose_model(name, cls_type=None, custom=False):
+    if custom:
+        path = "../models/" + name
+        if isfile(path):
+            model = pickle.load(open(path, 'rb'))
+            return model
+        else:
+            raise ValueError(f"{name} is not a valid model name, try to move it in models directory")
+
+    model_name = name + "_model_" + cls_type.lower() + ".sav"
+    path = "../models/" + model_name
+    if isfile(path):
+        model = pickle.load(open(path, 'rb'))
+    else:
+        raise ValueError(f"{name} is not a valid model name, available models are linearSVC, SVC, Knn, SGD")
+    return model
+
+
+def classify_mag(title, abstract, model_name="linearSVC", custom=False, score=False):
     """
     simple function to make MAG classification
     :param title: Title of the paper to classify
@@ -37,26 +56,18 @@ def classify_mag(title, abstract, model_name="linearSVC", score=False):
     :param scores: bool, display score for all classes or not
     :return: the class or classes with score
     """
-    specter = SentenceTransformer('allenai-specter')
-    if model_name == "linearSVC":
-        model = pickle.load(open("../models/linearSVC_model1.sav", 'rb'))
-    elif model_name == "SVC":
-        model = pickle.load(open("../models/SVC_model1.sav", 'rb'))
-    else:
-        path = "../models/" + model_name
-        if isfile(path):
-            model = pickle.load(open(path, 'rb'))
-        else:
-            raise ValueError("not a valid model name, try SVC or linearSVC or move model to models directory")
+    model = choose_model(model_name, "mag", custom)
 
+    specter = SentenceTransformer('allenai-specter')
     embedding = specter.encode([title + 'SEP' + abstract])
+
     if score:
         scores = np.array(list(zip(model.decision_function(embedding)[0], mag_classes.values())), dtype=object)
         return scores[np.argsort(-scores[:, 0])]
     return mag_classes[model.predict(embedding)[0]]
 
 
-def classify_mesh(title, abstract, model_name="linearSVC", score=False):
+def classify_mesh(title, abstract, model_name="linearSVC", custom=False, score=False):
     """
     simple function to make MeSH classification
     :param title: Title of the paper to classify
@@ -65,18 +76,9 @@ def classify_mesh(title, abstract, model_name="linearSVC", score=False):
     :param classes: bool, display score for all classes or not
     :return: the class or classes with score
     """
-    specter = SentenceTransformer('allenai-specter')
-    if model_name == "linearSVC":
-        model = pickle.load(open("../models/linearSVC_model1_mesh.sav", 'rb'))
-    elif model_name == "SVC":
-        model = pickle.load(open("../models/SVC_model1_mesh.sav", 'rb'))
-    else:
-        path = "../models/" + model_name
-        if isfile(path):
-            model = pickle.load(open(path, 'rb'))
-        else:
-            raise ValueError("not a valid model name, try SVC or linearSVC or move model to models directory")
+    model = choose_model(model_name, "mesh", custom)
 
+    specter = SentenceTransformer('allenai-specter')
     embedding = specter.encode([title + 'SEP' + abstract])
     if score:
         scores = np.array(list(zip(model.decision_function(embedding)[0], mesh_classes.values())), dtype=object)
@@ -87,6 +89,7 @@ def classify_mesh(title, abstract, model_name="linearSVC", score=False):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Classify a scientific paper.")
     parser.add_argument("--type", help="Type of classification, MAG or MeSH", required=True)
+    parser.add_argument("--custom", default=0, help="set True if you want to use a custom model")
     parser.add_argument("--model_name", help="Model name are (for now) linearSVC or SVC, linearSVC by default.")
     parser.add_argument("--title", nargs='*', help="Title of the document to classify.")
     parser.add_argument("--abstract", nargs='*', help="Abstract of the document to classify.")
