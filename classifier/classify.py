@@ -15,6 +15,7 @@ mesh_classes = {0: "Cardiovascular diseases", 1: "Chronic kidney disease", 2: "C
 
 default_models = ["linearSVC", "SVC", "Knn", "SGD"]
 
+
 def arg_to_string(array):
     """
     take the title or abstract arg and transform into a string
@@ -96,10 +97,12 @@ if __name__ == "__main__":
     parser.add_argument("--scores", default=False, type=int, help="give score for each class, either 0 or 1")
     params = parser.parse_args()
 
+
+
     if params.type.lower() == "mag":
-        classification = classify_mag(arg_to_string(params.title), arg_to_string(params.abstract), params.model_name, params.scores)
+        classification = classify_mag(arg_to_string(params.title), arg_to_string(params.abstract), params.model_name, params.custom, params.scores)
     elif params.type.lower() == "mesh":
-        classification = classify_mesh(arg_to_string(params.title), arg_to_string(params.abstract), params.model_name, params.scores)
+        classification = classify_mesh(arg_to_string(params.title), arg_to_string(params.abstract), params.model_name, params.custom, params.scores)
     else:
         raise ValueError("classification is either MAG or MeSH")
 
