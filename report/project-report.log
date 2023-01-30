@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.12.8)  30 JAN 2023 00:30
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.12.8)  30 JAN 2023 01:27
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -312,7 +312,7 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 
-Underfull \hbox (badness 3579) in paragraph at lines 94--95
+Underfull \hbox (badness 3579) in paragraph at lines 100--101
 []\OT1/ptm/m/n/8 2020. SPECTER: Document-level Rep-re-sen-ta-tion Learn-ing us-
 ing
  []
@@ -349,7 +349,7 @@ fb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb
 al/texlive/2020/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/local/texliv
 e/2020/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2020/tex
 mf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on project-report.pdf (2 pages, 119591 bytes).
+Output written on project-report.pdf (2 pages, 120352 bytes).
 PDF statistics:
  56 PDF objects out of 1000 (max. 8388607)
  40 compressed objects within 1 object stream

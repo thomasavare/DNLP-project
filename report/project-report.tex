@@ -72,7 +72,7 @@ After correctly importing the data and solving our embedding issues. Now we can 
                           & MAG   & MeSH  \\ \hline
 Linear SVC                & 74.71 & 84.45 \\ \hline
 SVC                       & 74.32 & 82.89 \\ \hline
-Gaussian naive bayes      & 69.78 & 68.19 \\ \hline
+Gaussian naive bayes      & 69.79 & 68.19 \\ \hline
 K-neighbors               & 69.25 & 82.87 \\ \hline
 SGD                       & 69.93 & 80.40 \\ \hline
 CNN                       & 72.05 & 81.00 \\ \hline
@@ -84,9 +84,15 @@ To try to top the models for the SciDocs, we tried to mimic the routine, at leas
 
 Unfortunately, the model with the best results is the linear SVC didn't always converge during the parameter search and it took too long when we increased the maximum number of iterations. Also when training a model with the same parameters as the one found with the parameter search, the results weren't improved.
 
-For the CNN, I empirically tried various architectures.
+For the CNN network, I empirically tried various architectures, and also "known" architectures. The best one was simply one dense layer with 768 units, so the size of the vector provided by SPECTER after embedding.
 
+\subsection{Using the models}
 
+To simplify the use of the models, I did a simple implementation of the models (except for the Cnn now) and also personal model if someone ever use the implementation. It uses a simple pipeline, It embeds the title and abstract of the paper using the SPECTER model from the hugging face transformer library and then the model is used to classify the embedding. The implementation was made so we can easily switch between models and type of classification, it can also provide the scores per class instead of the classification.
+
+\section{Conclusion}
+
+TODO
 
 \begin{thebibliography}{00}
 \bibitem{b1}Arman Cohan, Sergey Feldman, Iz Beltagy, Doug Downey, and Daniel Weld. 
