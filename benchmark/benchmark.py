@@ -50,7 +50,7 @@ if __name__ == '__main__':
     parser.add_argument("--embeddings", help="Path to embeddings, pid+embeddings")
     parser.add_argument("--meshlabels", help="Path to mesh test file")
     parser.add_argument("--maglabels", help="Path to mag test file")
-    parser.add_argument("--custom", help="Benchmarking of a specific model in the models directory")
+    parser.add_argument("--custom", nargs="*", help="Benchmarking of a specific model in the models directory")
     params = parser.parse_args()
 
     models_path = '../models'
@@ -58,7 +58,8 @@ if __name__ == '__main__':
         models_list = listdir(models_path)
         mag_models, mesh_models = meshmag_models(models_list)
     else:
-        mag_models, mesh_models = {params.custom: 0}, {params.custom: 0}
+        dic = dict(zip(params.custom, np.zeros(len(params.custom))))
+        mag_models, mesh_models = dic, dic
 
     if params.maglabels is None and params.meshlabels is None:
         raise ValueError("At least one type of classification for benchmarking")
