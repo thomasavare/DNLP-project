@@ -40,7 +40,7 @@ def benchmarking(models_list, models_path, x_values, y_values):
         model = pickle.load(open(model_path, 'rb'))
         y_pred = model.predict(x_values)
         f1 = np.round(f1_score(y_values, y_pred, average='macro') * 100, 2)
-        print(f1)
+        #print(f"{name}: {f1}")
         models_list[name] = f1
     return models_list
 
