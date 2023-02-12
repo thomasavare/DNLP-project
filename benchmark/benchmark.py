@@ -73,5 +73,5 @@ if __name__ == '__main__':
     if params.meshlabels is not None:
         x_mesh, y_mesh = prepare_data(params.embeddings, params.meshlabels)
         print("finished loading embeddings and labels for mesh benchmarking")
-        mesh_models = benchmarking(mag_models, models_path, x_mesh, y_mesh)
+        mesh_models = benchmarking(mesh_models, models_path, x_mesh, y_mesh)
         print(mesh_models)
