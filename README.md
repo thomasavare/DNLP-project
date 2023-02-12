@@ -28,7 +28,7 @@ distant representations otherwise
 Problem statement: theoretical formalization of the problem you have addressed
 - Expected input: title + abstract
 - Addressed task: MAG or MeSH classification
-- Expected output: class, probabilities
+- Expected output: class, scores
 
 ### Project rules
 
@@ -115,5 +115,14 @@ python scripts/embed.py \
 --cuda-device -1
 ```
 
+## The Classification Task
+
 In practice, since I don't have a GPU, I worked on Google Colab and used the SPECTER model from the HuggingFace 
-transformer library.
+transformer library and trained my models after recomputing the embeddings of the data provided on the ScidDocs GitHub.
+
+For more information about the classification task of a document, refer to the README of the classifier directory.
+
+## Models Benchmarking
+
+Similarly to the SciDocs benchmarking, I implemented a benchmarking for the herewith models. For more information 
+about the benchmarking, refer to the README from the benchmark directory.
